@@ -1,0 +1,47 @@
+<form #regForm="ngForm" (ngSubmit)="onSubmit(regForm)">
+
+  <!-- Name -->
+   
+  <input
+    name="name"
+    [(ngModel)]="user.name"
+    #name="ngModel"
+    required
+    minlength="2"
+  />
+  <div *ngIf="name.invalid && name.touched">
+    Name must be at least 2 characters
+  </div>
+
+  <!-- Email -->
+  <input
+    name="email"
+    type="email"
+    [(ngModel)]="user.email"
+    #email="ngModel"
+    required
+    email
+  />
+  <div *ngIf="email.invalid && email.touched">
+    <span *ngIf="email.errors?.['required']">Email required</span>
+    <span *ngIf="email.errors?.['email']">Invalid email</span>
+  </div>
+
+  <!-- Password -->
+  <input
+    name="password"
+    type="password"
+    [(ngModel)]="user.password"
+    #pwd="ngModel"
+    required
+    [pattern]="strongPwdPattern"
+  />
+  <div *ngIf="pwd.invalid && pwd.touched">
+    <span *ngIf="pwd.errors?.['required']">Password required</span>
+    <span *ngIf="pwd.errors?.['pattern']">Must be strong password</span>
+  </div>
+
+  <button type="submit" [disabled]="regForm.invalid">
+    Register
+  </button>
+</form>
